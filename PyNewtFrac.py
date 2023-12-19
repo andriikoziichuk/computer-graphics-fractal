@@ -1,12 +1,9 @@
 import pygame
-from time import sleep
 from time import time
-import numpy as np
-import math
 from pygame.locals import *
 import random
-import itertools
 import math
+
 
 def pixels(screen, color, pos, thickness):
     for i in range(-thickness, thickness):
@@ -19,9 +16,9 @@ def newton_iter(f, f1, x0):
     if f1(x) == 0:
         return
 
-    t = lambda y : (y-x)*f1(x)+f(x)
     x = x - f(x) / f1(x)
     return x
+
 
 def newton_repeat(n, f, f1, x0):
     res = x0
@@ -30,15 +27,12 @@ def newton_repeat(n, f, f1, x0):
     return res
 
 
-
-
-def runPG(A, roots, root_colors):
+def runPG(A, roots, root_colors, f, f1, x0):
     winsize = 500
 
     side = math.floor(math.sqrt(len(A)))
 
     w1 = math.floor((winsize)/2)
-    axis_thickness = 3
     # Set up the drawing window
     screen = pygame.display.set_mode([winsize, winsize])
     screen.fill((10, 10, 10))
@@ -61,8 +55,6 @@ def runPG(A, roots, root_colors):
                 c = root_colors[A[index]]
                 A_remapped[i + w1][j + w1] = pygame.Color(c[0], c[1], c[2])
 
-
-
         t1 = time()
         print("Rendered in: " + str(t1 - t) + " seconds")
         # Flip the display
@@ -78,6 +70,10 @@ def runPG(A, roots, root_colors):
             if event.type == KEYDOWN and event.key == K_s and scale > 1:
                 scale -= 0.5
                 break
+            if event.type == KEYDOWN and event.key == K_i:
+                x0 = input("Enter the lambda value to start (for example '-3+2j'): ")
+                newton_roots_coloring(f, f1, x0, winsize)
+                break
             if event.type == KEYDOWN and event.key == K_c:
                 for i in range(len(root_colors)):
                     r = random.randint(50,150)
@@ -87,11 +83,7 @@ def runPG(A, roots, root_colors):
                 break
             pygame.display.flip()
 
-
-
     pygame.quit()
-
-
 
 
 def newton_roots_coloring(f, f1, x0, winsize):
@@ -110,7 +102,7 @@ def newton_roots_coloring(f, f1, x0, winsize):
                 current_root_index = 0
 
                 for r in range(len(roots)):
-                    if(abs(newt - roots[r]) < .0001):
+                    if abs(newt - roots[r]) < .0001:
                         found += 1
                         current_root_index = r
                         break
@@ -121,8 +113,6 @@ def newton_roots_coloring(f, f1, x0, winsize):
 
                 if found == 0:
                     roots.append(newt)
-
-
 
                 A.append(current_root_index)
             else:
@@ -139,4 +129,4 @@ def newton_roots_coloring(f, f1, x0, winsize):
 
     print(root_colors)
 
-    runPG(A, roots, root_colors)
+    runPG(A, roots, root_colors, *[f, f1, x0])
