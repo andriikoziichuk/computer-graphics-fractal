@@ -1,12 +1,9 @@
 import pygame
-from time import sleep
 from time import time
-import numpy as np
-import math
 from pygame.locals import *
 import random
-import itertools
 import math
+
 
 def pixels(screen, color, pos, thickness):
     for i in range(-thickness, thickness):
@@ -19,17 +16,16 @@ def newton_iter(f, f1, x0):
     if f1(x) == 0:
         return
 
-    t = lambda y : (y-x)*f1(x)+f(x)
+    t = lambda y: (y-x)*f1(x)+f(x)
     x = x - f(x) / f1(x)
     return x
+
 
 def newton_repeat(n, f, f1, x0):
     res = x0
     for i in range(n):
         res = newton_iter(f, f1, res)
     return res
-
-
 
 
 def runPG(A, roots, root_colors):
@@ -61,8 +57,6 @@ def runPG(A, roots, root_colors):
                 c = root_colors[A[index]]
                 A_remapped[i + w1][j + w1] = pygame.Color(c[0], c[1], c[2])
 
-
-
         t1 = time()
         print("Rendered in: " + str(t1 - t) + " seconds")
         # Flip the display
@@ -87,11 +81,7 @@ def runPG(A, roots, root_colors):
                 break
             pygame.display.flip()
 
-
-
     pygame.quit()
-
-
 
 
 def newton_roots_coloring(f, f1, x0, winsize):
@@ -121,8 +111,6 @@ def newton_roots_coloring(f, f1, x0, winsize):
 
                 if found == 0:
                     roots.append(newt)
-
-
 
                 A.append(current_root_index)
             else:

@@ -7,8 +7,8 @@ import PyNewtFrac
         - press C to change the colours, in case you don't like them
 '''
 
-f = lambda x : x**4 + 5
-f1 = lambda x : 4 * x  **3
+f = lambda x: x ** 4 + 5
+f1 = lambda x: 4 * x ** 3
 
 x0 = - 3 + 2j
 
