@@ -71,7 +71,7 @@ def runPG(A, roots, root_colors, f, f1, x0):
                 scale -= 0.5
                 break
             if event.type == KEYDOWN and event.key == K_i:
-                x0 = input("Enter the lambda value to start (for example '-3+2j'): ")
+                x0 = eval(input("Enter x0 for example -3+2j: "))
                 newton_roots_coloring(f, f1, x0, winsize)
                 break
             if event.type == KEYDOWN and event.key == K_c:

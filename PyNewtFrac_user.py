@@ -9,21 +9,13 @@ from sympy import symbols, diff
         - press I to re-render, in case you want to change some params
 '''
 
-symbol = symbols('x')
+input_data = input("Enter x0 for example -3+2j: ")
 
-input_data = input("Enter a polynomial: ")
-
-f = lambda x: eval(input_data)
-f1 = diff(f, symbol)
-
-x0 = - 3 + 2j
+x0 = eval(input_data)
 
 resolution = 600
 
-# f = lambda x: x ** 4 + 5
-# f1 = lambda x: 4 * x ** 3
-
-# x0 = input("Enter the lambda value to start (for example '-3+2j'): ")
-# resolution = int(input("Enter the resolution value to start (for example '600'): "))
+f = lambda x: x ** 4 + 5
+f1 = lambda x: 4 * x ** 3
 
 PyNewtFrac.newton_roots_coloring(f, f1, x0, resolution)
